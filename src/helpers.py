@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import librosa
 from pathlib import Path
-
+import model
 
 def initialize_audio_features():
     metadata = parse_metadata('../data/UrbanSound8K/metadata/UrbanSound8K.csv')
@@ -85,10 +85,10 @@ def get_model_stats(features_to_test, feature_matrix):
    
     ## fit the model
     testing_features = np.array(testing_features)
-    model = model.Model(testing_features, labels, folds, model_cfg)
-    fold_acc, predicted_labels, actual_labels = model.train_kfold()
+    my_model = model.Model(testing_features, labels, folds, model_cfg)
+    fitted_model, fold_acc, predicted_labels, actual_labels = my_model.train_kfold()
     
-    return fold_acc, predicted_labels, actual_labels
+    return fitted_model, fold_acc, predicted_labels, actual_labels
 
 def prediction_df(predicted_labels, actual_labels):
     class_ids = {

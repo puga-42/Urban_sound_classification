@@ -31,7 +31,7 @@ class Model:
             X_test = ss.transform(X_test)
 
             clf = self.cfg["model"]
-            clf.fit(X_train, y_train)
+            clf = clf.fit(X_train, y_train)
 
             y_pred = clf.predict(X_test)
 
@@ -40,4 +40,4 @@ class Model:
             self.predicted_sounds.append(y_pred)
             self.val_fold_scores_.append(fold_acc)
 
-        return self.val_fold_scores_, self.predicted_sounds, self.actual_sounds 
+        return clf, self.val_fold_scores_, self.predicted_sounds, self.actual_sounds 
