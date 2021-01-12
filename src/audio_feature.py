@@ -23,13 +23,23 @@ class AudioFeature:
             [self.features, feature] if self.features is not None else feature
         )
         
-    def extract_mfcc(self, n_mfcc=25):
+    def extract_mfcc(self, n_mfcc=50):
         mfcc = librosa.feature.mfcc(self.y, sr=self.sr, n_mfcc=n_mfcc)
 
         mfcc_mean = mfcc.mean(axis=1).T
         mfcc_std = mfcc.std(axis=1).T
         mfcc_feature = np.hstack([mfcc_mean, mfcc_std])
         self.concat_features(mfcc_feature)
+
+    def extract_mfcc12(self, n_mfcc=12):
+        mfcc = librosa.feature.mfcc(self.y, sr=self.sr, n_mfcc=n_mfcc)
+
+        mfcc_mean = mfcc.mean(axis=1).T
+        mfcc_std = mfcc.std(axis=1).T
+        mfcc_feature = np.hstack([mfcc_mean, mfcc_std])
+        self.concat_features(mfcc_feature)
+    
+
     
         
     def extract_rolloff(self):
@@ -84,6 +94,7 @@ class AudioFeature:
     def get_features(self, *feature_list, save_local=True):
         extract_fn = dict(
             mfcc=self.extract_mfcc,
+            mfcc_12=self.extract_mfcc12,
             spec_cent=self.extract_spec_cent,
             rolloff=self.extract_rolloff,
             bw=self.extract_bw,
