@@ -3,40 +3,38 @@
 # The Data
 The data was taken from the UrbanSounds8k dataset. It is composed of 8,723 sound snippets taken from 1297 unique sounds of 10 classes:
 
-0:
+Class 0:    Air Conditioners
 ![alt text](img/0_airconditioner.png "Title")
 
 
-1:
+Class 1:    Car Horns
 ![alt text](img/1_car.png "Title")
 
-2:
+Class 2:    Children Playing
 ![alt text](img/2_children.png "Title")
 
-3:
+Class 3:    Dog Bark
 ![alt text](img/3_dog.png "Title")
 
-4:
+Class 4:    Drilling
 ![alt text](img/4_drilling.png "Title")
 
-5:
+Class 5:    Engine Idling
 ![alt text](img/5_engine.png "Title")
 
-6:
+Class 6:    Gunshot
 ![alt text](img/6_gunshot.png "Title")
 
-7:
+Class 7:    Jackhammer
 ![alt text](img/7_jackhammer.png "Title")
 
-8:
+Class 8:    Siren
 ![alt text](img/8_siren.png "Title")
 
-9:
+Class 9:    Street Music
 ![alt text](img/9_street_music.png "Title")
 
 
-
-## Example Sounds from Each Class
 
 
 # Features Extracted
@@ -62,12 +60,21 @@ It sounds like the air conditioner is usually more of a constant drone than the 
 # Final Model
 ## 50 MFCCs, ZCR, Chroma STFT, Spectral Contrast
 
-The last model was so close to 70% - I had to find one a feature to push it over the top.
+![alt text](img/cm_zcr_chroma_spectral_mfcc.png "Title")
 
+Ultimately we achieved an accuracy of 70.2%. I didn't expect the MFCC's to perform so well, but I guess there's a reason they've been one of the most used features in audio classification over the past few decades. Despite the improvement, the model has a very hard time predicting white noises like air conditioners and engines idling.
+
+-----
+
+## Why did the Mel-Frequency Cepstral Coefficients Perform so Well?
+
+### I have one main hypothesis for the MFCC's success:
+MFCC's are used for detecting speech because they are good at seperating signals produced from vocal tract movements from signals produced from glottal pulses. It's possible that some background noises were classified as glottal pulses and were seperated from the rest of the signal. 
 
 # Next Steps
 
 It's clear that audio signals with dense frequency plots are giving the model the most trouble. I want to try and tackle this problem in two ways:
+
 1 - Using a Neural Net to predict classes. Training over 10 folds will take some time but could yield interesting results.
 
 
